@@ -14,6 +14,7 @@ public class Transformers
 
     public static <T> void applyDest(Transformer<T> tran, ArrayList<T> a)
     {
+        ArrayList<T> b = new ArrayList<>();
         for(int i = 0; i < a.size(); i++)
         {
             T transformedValue = tran.transform(a.get(i));
