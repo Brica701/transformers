@@ -1,75 +1,70 @@
 package org.iesvdm.transformer;
 
-public class LispList<E>
-{
+public class LispList<E> {
     private Cell<E> myList;
 
-    private LispList(Cell<E> list)
-    {
-        myList=list;
+    // Constructor privado
+    private LispList(Cell<E> list) {
+        myList = list;
     }
 
-    public boolean isEmpty()
-    {
-        return myList==null;
+    // Método estático para crear una lista de enteros
+    public static LispList<Integer> of(int... elements) {
+        LispList<Integer> list = empty(); // Crear una lista vacía
+        for (int i = elements.length - 1; i >= 0; i--) {
+            list = new LispList<>(new Cell<>(elements[i], list.myList)); // Construir la lista
+        }
+        return list; // Retornar la lista creada
     }
 
-    public E head()
-    {
-        return myList.first;
+    public boolean isEmpty() {
+        return myList == null; // Verificar si la lista está vacía
     }
 
-    public LispList<E> tail()
-    {
-        return new LispList<E>(myList.rest);
+    public E head() {
+        if (isEmpty()) throw new IllegalStateException("List is empty");
+        return myList.first; // Retornar el primer elemento
     }
 
-    public LispList<E> cons(E item)
-    {
-        return new LispList<E>(new Cell<E>(item,myList));
+    public LispList<E> tail() {
+        if (isEmpty()) throw new IllegalStateException("List is empty");
+        return new LispList<>(myList.rest); // Retornar el resto de la lista
     }
 
-    public static <T> LispList<T> empty()
-    {
-        return new LispList<T>(null);
+    public LispList<E> cons(E item) {
+        return new LispList<>(new Cell<>(item, myList)); // Añadir un elemento al inicio
     }
 
-    public boolean equals(Object other)
-    {
+    public static <T> LispList<T> empty() {
+        return new LispList<>(null); // Retornar una lista vacía
+    }
+
+    public boolean equals(Object other) {
+        if (!(other instanceof LispList<?>)) return false;
         LispList<E> otherList = (LispList<E>) other;
-        if(this.isEmpty())
-            return otherList.isEmpty();
-        else
-            return this.head().equals(otherList.head()) &&
-                    this.tail().equals(otherList.tail());
+        if (this.isEmpty()) return otherList.isEmpty();
+        return this.head().equals(otherList.head()) && this.tail().equals(otherList.tail());
     }
 
-    public String toString()
-    {
-        if(isEmpty())
-            return "[]";
-        else
-            return "["+head()+restToString(tail());
+    public String toString() {
+        if (isEmpty()) return "[]"; // Representación de lista vacía
+        return "[" + head() + restToString(tail()); // Representación de la lista
     }
 
-    private static <T> String restToString(LispList<T> l)
-    {
-        if(l.isEmpty())
-            return "]";
-        else
-            return ","+l.head()+restToString(l.tail());
+    private static <T> String restToString(LispList<T> l) {
+        if (l.isEmpty()) return "]";
+        return "," + l.head() + restToString(l.tail()); // Construir cadena de texto
     }
 
-    private static class Cell <T>
-    {
-        T first;
-        Cell<T> rest;
+    // Clase interna Cell
+    private static class Cell<T> {
+        T first; // Primer elemento
+        Cell<T> rest; // Resto de la lista
 
-        Cell(T h,Cell<T> t)
-        {
-            first=h;
-            rest=t;
+        Cell(T h, Cell<T> t) {
+            first = h; // Inicializar primer elemento
+            rest = t; // Inicializar resto de la lista
         }
     }
-
 }
+
