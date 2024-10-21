@@ -4,8 +4,11 @@ public class LispList<E> {
     private Cell<E> myList;
 
     // Constructor privado
-    private LispList(Cell<E> list) {
+    LispList(Cell<E> list) {
         myList = list;
+    }
+
+    public LispList(String alice, String bob, String charlie) {
     }
 
     // Método estático para crear una lista de enteros

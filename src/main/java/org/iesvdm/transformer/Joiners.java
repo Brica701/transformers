@@ -15,7 +15,7 @@ public class Joiners {
         }
     }
 
-    // Nuevo método zipArrayLists
+    //Nuevo método zipArrayLists
     public static <T> ArrayList<T> zipArrayLists(Joiner<T> joiner, ArrayList<T> list1, ArrayList<T> list2) {
         ArrayList<T> resultList = new ArrayList<>();
 
@@ -27,5 +27,12 @@ public class Joiners {
         }
 
         return resultList;
+    }
+
+    //Método fold que toma un Joiner y una ArrayList
+    public static <T> T fold(ArrayList<T> list, Joiner<T> joiner) {
+        if (list.isEmpty()) {
+        }
+            return null;
     }
 }
